@@ -246,7 +246,7 @@ async def send_one_ping(my_socket, dest_addr, id_, timeout, family):
     await future
 
 
-async def ping(dest_addr, timeout=10, family=None):
+async def ping(dest_addr, timeout=10, family=None, on_port=80):
     """
     Returns either the delay (in seconds) or raises an exception.
     :param dest_addr:
@@ -288,6 +288,7 @@ async def ping(dest_addr, timeout=10, family=None):
         else:
             raise
 
+    my_socket.bind((socket.gethostname(), on_port))
     my_socket.setblocking(False)
 
     my_id = uuid.uuid4().int & 0xFFFF
